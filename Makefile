@@ -17,13 +17,13 @@ run-p4:
 	./p4
 
 # Nu uitați să modificați numele surselor și, eventual, ale executabilelor.
-p1: ./skel/feribot.cpp
+p1: ./skel/feribot/feribot.cpp
 	$(CC) -o $@ $^ $(CCFLAGS)
-p2: ./skel/nostory/nostory-skeleton.cpp
+p2: ./skel/nostory/nostory.cpp
 	$(CC) -o $@ $^ $(CCFLAGS)
-p3: ./skel/semnale/semnale-skeleton.cpp
+p3: ./skel/sushi/sushi.cpp
 	$(CC) -o $@ $^ $(CCFLAGS)
-p4: ./skel/sushi/sushi-skeleton.cpp
+p4: ./skel/semnale/semnale.cpp
 	$(CC) -o $@ $^ $(CCFLAGS)
 
 # Vom șterge executabilele.

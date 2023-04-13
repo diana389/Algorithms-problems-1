@@ -22,27 +22,30 @@ vector<int64_t> ReadVector(istream &is, int size, int64_t &elem_max, int64_t &su
     return vec;
 }
 
-bool PossibleResult(ostream &fout, int64_t min, vector<int64_t> &v, int N, int K)
+// check if the cost could be a solution
+bool PossibleResult(int64_t max, vector<int64_t> &v, int N, int K)
 {
     int i, groups = 1;
     int64_t current_sum = 0;
 
+    // form groups to fit the cost
     for (i = 0; i < N; i++)
-        if (current_sum + v[i] <= min)
+        if (current_sum + v[i] <= max) // the car can be addes to the group
             current_sum += v[i];
         else
         {
-            current_sum = v[i];
+            current_sum = v[i]; // it is formed a new group
             groups++;
         }
 
+    // the minimum number of groups formed to fit the cost max
     if (groups <= K)
         return 1;
 
     return 0;
 }
 
-int64_t BinarySearch(ostream &fout, int64_t left, int64_t right, vector<int64_t> &v, int N, int K)
+int64_t BinarySearch(int64_t left, int64_t right, vector<int64_t> &v, int N, int K)
 {
     int64_t mid, res = 0;
 
@@ -50,10 +53,10 @@ int64_t BinarySearch(ostream &fout, int64_t left, int64_t right, vector<int64_t>
     {
         mid = (left + right) / 2;
 
-        if (PossibleResult(fout, mid, v, N, K) == 1)
+        if (PossibleResult(mid, v, N, K) == 1)
         {
-            res = mid;
-            right = mid - 1;
+            res = mid;       // the solution is saved
+            right = mid - 1; // the search continues for a smaller value
         }
         else
             left = mid + 1;
@@ -73,6 +76,6 @@ int main()
 
     auto v = ReadVector(fin, N, elem_max, sum);
 
-    int64_t res = BinarySearch(fout, elem_max, sum, v, N, K);
+    int64_t res = BinarySearch(elem_max, sum, v, N, K);
     fout << res << endl;
 }
