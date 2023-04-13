@@ -31,44 +31,44 @@ int64_t SolveTask1(const vector<int> &a, const vector<int> &b)
     int vec[2 * a.size()];
 
     // vec contains the values from both vectors a and b
-    for (i = 0; i < a.size(); i++)
+    for (i = 0; i < (int)a.size(); i++)
         vec[i] = a[i];
 
-    for (i = 0; i < b.size(); i++)
+    for (i = 0; i < (int)b.size(); i++)
         vec[a.size() + i] = b[i];
 
     // vec is sorted in descending order
-    qsort(vec, 2 * a.size(), sizeof(int), compare_desc);
+    qsort(vec, 2 * (int)a.size(), sizeof(int), compare_desc);
 
     // the maxim sum is the sum of the biggest n values
-    for (i = 0; i < a.size(); i++)
+    for (i = 0; i < (int)a.size(); i++)
         sum += vec[i];
 
     return sum;
 }
 
-int64_t SolveTask2(ostream &fout, const vector<int> &a, const vector<int> &b, int moves)
+int64_t SolveTask2(const vector<int> &a, const vector<int> &b, int moves)
 {
     int64_t sum = 0;
 
     // initial sum
-    for (int i = 0; i < a.size(); i++)
+    for (int i = 0; i < (int)a.size(); i++)
         sum += max(a[i], b[i]);
 
     int vec_min[a.size()]; // this vector stores the minimum value between numbers on the same position
     int vec_max[a.size()]; // this vector stores the maximum value between numbers on the same position
 
-    for (int i = 0; i < a.size(); i++)
+    for (int i = 0; i < (int)a.size(); i++)
     {
         vec_min[i] = min(a[i], b[i]);
         vec_max[i] = max(a[i], b[i]);
     }
 
     // the minimum vector is sorted in descending order
-    qsort(vec_min, a.size(), sizeof(int), compare_desc);
+    qsort(vec_min, (int)a.size(), sizeof(int), compare_desc);
 
     // the maximum vector is sorted in ascending order
-    qsort(vec_max, a.size(), sizeof(int), compare_asc);
+    qsort(vec_max, (int)a.size(), sizeof(int), compare_asc);
 
     // for (int i = 0; i < a.size(); i++)
     //     fout << vec_max[i] << " ";
@@ -143,7 +143,7 @@ int main()
     auto a = ReadVector(fin, n);
     auto b = ReadVector(fin, n);
 
-    auto res = task == 1 ? SolveTask1(a, b) : SolveTask2(fout, a, b, moves);
+    auto res = task == 1 ? SolveTask1(a, b) : SolveTask2(a, b, moves);
     fout << res << "\n";
 
     return 0;
