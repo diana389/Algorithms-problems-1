@@ -118,7 +118,10 @@ struct element
 // sorting in descending order
 int compare_desc(const void *a, const void *b)
 {
-	return (*((plate *)b)).grade - (*((plate *)a)).grade;
+	if ((*((plate *)b)).grade != (*((plate *)a)).grade)
+		return (*((plate *)b)).grade - (*((plate *)a)).grade;
+
+	return (*((plate *)a)).price - (*((plate *)b)).price;
 }
 
 int task3(int n, int m, int x, vector<int> &p, vector<vector<int>> &g)
@@ -150,12 +153,15 @@ int task3(int n, int m, int x, vector<int> &p, vector<vector<int>> &g)
 		plates[2 * i + 2].price = p[i];
 	}
 
-	plates[0].grade = n * 10 + 1; // max possible + 1
+	plates[0].grade = 101; // max possible + 1
 
 	qsort(plates, 2 * m + 1, sizeof(plate), compare_desc);
 
 	// for (int i = 1; i <= 2 * m; i++)
 	// 	cout << plates[i].grade << " " << plates[i].price << endl;
+
+	// cout << endl
+	// 	 << endl;
 
 	element **dp = new element *[2 * m + 1];
 	for (int i = 0; i <= 2 * m; i++)
@@ -170,6 +176,7 @@ int task3(int n, int m, int x, vector<int> &p, vector<vector<int>> &g)
 
 	// general case
 	for (int i = 1; i <= 2 * m; ++i)
+	{
 		for (int cap = 0; cap <= n * x; ++cap)
 		{
 			// We don't use object i => it's the solution from step i - 1
@@ -183,8 +190,11 @@ int task3(int n, int m, int x, vector<int> &p, vector<vector<int>> &g)
 				int sol_aux = dp[i - 1][cap - plates[i].price].value + plates[i].grade;
 				int nr_plates = dp[i - 1][cap - plates[i].price].nr_plates + 1;
 
-				if (sol_aux >= dp[i][cap].value)
+				if (sol_aux > dp[i][cap].value || (sol_aux == dp[i][cap].value && nr_plates < dp[i][cap].nr_plates))
 				{
+					// if (nr_plates == n)
+					// 	return sol_aux;
+
 					if (nr_plates <= n)
 					{
 						dp[i][cap].value = sol_aux;
@@ -192,12 +202,25 @@ int task3(int n, int m, int x, vector<int> &p, vector<vector<int>> &g)
 					}
 					else
 					{
-						dp[i][cap].value = dp[i - 1][cap].value;
-						dp[i][cap].nr_plates = dp[i - 1][cap].nr_plates;
+						if (dp[i - 1][cap].value > dp[i][cap - 1].value)
+						{
+							dp[i][cap].value = dp[i - 1][cap].value;
+							dp[i][cap].nr_plates = dp[i - 1][cap].nr_plates;
+						}
+						else
+						{
+							dp[i][cap].value = dp[i][cap - 1].value;
+							dp[i][cap].nr_plates = dp[i][cap - 1].nr_plates;
+						}
 					}
 				}
 			}
+
+			// cout << dp[i][cap].value << " ";
 		}
+
+		// cout << endl;
+	}
 
 	int result = dp[2 * m][n * x].value;
 

@@ -5,6 +5,7 @@
         "new": "cpp",
         "iostream": "cpp",
         "random": "cpp",
-        "limits": "cpp"
+        "limits": "cpp",
+        "numeric": "cpp"
     }
 }

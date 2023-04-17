@@ -6,7 +6,7 @@ const int mod = 1000000007;
 
 int type1(int x, int y)
 {
-	// allocate the memory
+	// allocate memory
 	int **dp = new int *[x + 1];
 	for (int i = 0; i <= x; i++)
 		dp[i] = new int[y + 1];
@@ -32,7 +32,7 @@ int type1(int x, int y)
 
 	int result = dp[x][y];
 
-	// free the memory
+	// free memory
 	for (int i = 0; i <= x; i++)
 		delete[] dp[i];
 
@@ -43,7 +43,7 @@ int type1(int x, int y)
 
 int type2(int x, int y)
 {
-	// allocate the memory
+	// allocate memory
 	int **dp = new int *[x + 1];
 	for (int i = 0; i <= x; i++)
 		dp[i] = new int[y + 1];
@@ -75,7 +75,7 @@ int type2(int x, int y)
 
 	int result = dp[x][y];
 
-	// free the memory
+	// free memory
 	for (int i = 0; i <= x; i++)
 		delete[] dp[i];
 
