@@ -5,12 +5,11 @@
 
 using namespace std;
 
-vector<int64_t> ReadVector(istream &is, int size, int64_t &elem_max, int64_t &sum)
-{
+vector<int64_t> ReadVector(istream &is, int size,
+                    int64_t &elem_max, int64_t &sum) {
     vector<int64_t> vec(size);
 
-    for (auto &num : vec)
-    {
+    for (auto &num : vec) {
         is >> num;
 
         if (num > elem_max)
@@ -23,18 +22,16 @@ vector<int64_t> ReadVector(istream &is, int size, int64_t &elem_max, int64_t &su
 }
 
 // check if the cost could be a solution
-bool PossibleResult(int64_t max, vector<int64_t> &v, int N, int K)
-{
+bool PossibleResult(int64_t max, vector<int64_t> &v, int N, int K) {
     int i, groups = 1;
     int64_t current_sum = 0;
 
     // form groups to fit the cost
     for (i = 0; i < N; i++)
-        if (current_sum + v[i] <= max) // the car can be addes to the group
-            current_sum += v[i];
-        else
-        {
-            current_sum = v[i]; // it is formed a new group
+        if (current_sum + v[i] <= max) {
+            current_sum += v[i];  // the car can be addes to the group
+        } else {
+            current_sum = v[i];  // it is formed a new group
             groups++;
         }
 
@@ -45,28 +42,25 @@ bool PossibleResult(int64_t max, vector<int64_t> &v, int N, int K)
     return 0;
 }
 
-int64_t BinarySearch(int64_t left, int64_t right, vector<int64_t> &v, int N, int K)
-{
+int64_t BinarySearch(int64_t left, int64_t right, vector<int64_t> &v,
+                                                    int N, int K) {
     int64_t mid, res = 0;
 
-    while (left <= right)
-    {
+    while (left <= right) {
         mid = (left + right) / 2;
 
-        if (PossibleResult(mid, v, N, K) == 1)
-        {
-            res = mid;       // the solution is saved
-            right = mid - 1; // the search continues for a smaller value
-        }
-        else
+        if (PossibleResult(mid, v, N, K) == 1) {
+            res = mid;        // the solution is saved
+            right = mid - 1;  // the search continues for a smaller value
+        } else {
             left = mid + 1;
+        }
     }
 
     return res;
 }
 
-int main()
-{
+int main() {
     ifstream fin("feribot.in");
     ofstream fout("feribot.out");
 

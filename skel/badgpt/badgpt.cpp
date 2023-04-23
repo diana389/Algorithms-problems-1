@@ -6,28 +6,25 @@ const int mod = 1000000007;
 uint64_t **mat;
 
 // function that multiplies 2 matrices
-uint64_t **multiply(uint64_t **a, uint64_t **b)
-{
+uint64_t **multiply(uint64_t **a, uint64_t **b) {
     // allocate memory
     uint64_t **res = new uint64_t *[2];
     for (int i = 0; i < 2; i++)
         res[i] = new uint64_t[2];
 
     for (int i = 0; i < 2; i++)
-        for (int j = 0; j < 2; j++)
-        {
+        for (int j = 0; j < 2; j++) {
             res[i][j] = 0;
 
             for (int k = 0; k < 2; k++)
-                res[i][j] = (res[i][j] % mod + ((a[i][k] % mod) * (b[k][j] % mod)) % mod) % mod;
+                res[i][j] += ((a[i][k] % mod) * (b[k][j] % mod)) % mod;
         }
 
     return res;
 }
 
 // function that raises the matrix to power n
-uint64_t **power(uint64_t n)
-{
+uint64_t **power(uint64_t n) {
     // base case
     if (n == 1)
         return mat;
@@ -41,8 +38,7 @@ uint64_t **power(uint64_t n)
 }
 
 // function that returns the number of possible initial substrings
-uint64_t substring(uint64_t n)
-{
+uint64_t substring(uint64_t n) {
     if (n == 0)
         return 0;
 
@@ -60,20 +56,18 @@ uint64_t substring(uint64_t n)
 
 // function that parses the input and returns the number of
 // possible initial strings
-uint64_t task()
-{
+uint64_t task() {
     char l;
     uint64_t n, res = 1;
 
     while (cin >> l >> n)
-        if (l == 'n' || l == 'u') // more than 1 possibilities
+        if (l == 'n' || l == 'u')  // more than 1 possibilities
             res = ((res % mod) * (substring(n) % mod)) % mod;
 
     return res;
 }
 
-int main()
-{
+int main() {
     freopen("badgpt.in", "r", stdin);
     freopen("badgpt.out", "w", stdout);
 
