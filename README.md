@@ -1,4 +1,5 @@
-Stefan Diana Maria - 322CC
+# PA - TEMA 1 - APROAPE FARA GIGEL -
+###Stefan Diana Maria - 322CC
 
 ## FERIBOT
 Am facut un `binary search` pentru a determina costul minim pentru care toate masinile se incadreaza in cele k feriborturi. 
